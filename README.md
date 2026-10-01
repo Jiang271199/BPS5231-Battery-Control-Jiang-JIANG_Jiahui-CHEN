@@ -121,8 +121,8 @@ jupyter notebook
 
 Notebook execution order:
 
-1. `notebooks/01_EDA.ipynb`
-2. `notebooks/02_Baseline_and_PV_Priority.ipynb`
+1. [`01_EDA.ipynb`](notebooks/01_EDA.ipynb) — data audit and exploratory data analysis
+2. [`02_Baseline_and_PV_Priority.ipynb`](notebooks/02_Baseline_and_PV_Priority.ipynb) — no-battery baseline, PV-priority control and Interim comparison
 
 ### Reproduction commands
 
