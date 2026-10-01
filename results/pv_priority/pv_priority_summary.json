@@ -1,0 +1,91 @@
+{
+  "method": {
+    "controller": "PV-priority rule-based control",
+    "charge_rule": "Charge only from contemporaneous PV surplus",
+    "discharge_rule": "Discharge only against contemporaneous building deficit",
+    "grid_charging": false,
+    "battery_export": false,
+    "timestep_hours": 1.0,
+    "model_reference": "https://github.com/intelligent-environments-lab/CityLearn/blob/v1.3.6/citylearn/energy_model.py",
+    "model_version_emulated": "CityLearn v1.3.6"
+  },
+  "battery_parameters": {
+    "capacity_kwh": 6.4,
+    "nominal_power_kw": 5.0,
+    "schema_efficiency": 0.9,
+    "loss_coefficient": 0.0,
+    "capacity_loss_coefficient": 1e-05,
+    "initial_soc_kwh": 0.0,
+    "default_power_efficiency_curve": [
+      [
+        0.0,
+        0.83
+      ],
+      [
+        0.3,
+        0.83
+      ],
+      [
+        0.7,
+        0.9
+      ],
+      [
+        0.8,
+        0.9
+      ],
+      [
+        1.0,
+        0.85
+      ]
+    ],
+    "default_capacity_power_curve": [
+      [
+        0.0,
+        1.0
+      ],
+      [
+        0.8,
+        1.0
+      ],
+      [
+        1.0,
+        0.2
+      ]
+    ],
+    "efficiency_scaling": 0.5
+  },
+  "baseline": {
+    "annual_load_kwh": 8807.643180476087,
+    "annual_pv_kwh": 6067.641221684081,
+    "direct_pv_use_kwh": 3849.6926105603598,
+    "grid_import_kwh": 4957.950569915728,
+    "grid_export_kwh": 2217.9486111237206,
+    "electricity_cost_currency": 1540.8814007703465,
+    "carbon_emissions_kgco2": 791.5336659183953,
+    "peak_grid_import_kw": 4.9387665,
+    "pv_self_consumption_fraction": 0.6344627953285401,
+    "self_sufficiency_fraction": 0.4370854417778842
+  },
+  "pv_priority": {
+    "annual_load_kwh": 8807.643180476087,
+    "annual_pv_kwh": 6067.641221684081,
+    "grid_import_kwh": 3651.774050103505,
+    "grid_export_kwh": 659.2196557226863,
+    "electricity_cost_currency": 1045.4165447407374,
+    "carbon_emissions_kgco2": 573.9284375868612,
+    "peak_grid_import_kw": 4.9387665,
+    "pv_self_consumption_fraction": 0.8913548722414871,
+    "self_sufficiency_fraction": 0.5853857864952572,
+    "battery_charge_input_kwh": 1558.7295432341284,
+    "battery_discharge_output_kwh": 1306.1771076453163,
+    "battery_ac_throughput_kwh": 2864.906650879445,
+    "equivalent_full_cycles_ac": 223.82083209995662,
+    "battery_conversion_loss_kwh": 252.55243558881227,
+    "initial_soc_kwh": 0.0,
+    "final_soc_kwh": 0.0,
+    "initial_capacity_kwh": 6.4,
+    "final_capacity_kwh": 6.385659407147272,
+    "capacity_loss_kwh": 0.014340592852728484
+  },
+  "all_validation_checks_passed": true
+}

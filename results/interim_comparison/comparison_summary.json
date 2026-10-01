@@ -1,0 +1,88 @@
+{
+  "scope": "Interim comparison: no battery versus PV-priority battery control",
+  "annual_kpis": [
+    {
+      "metric": "Grid import",
+      "unit": "kWh",
+      "no_battery": 4957.950569915728,
+      "pv_priority": 3651.774050103505,
+      "strategy_minus_baseline": -1306.176519812223,
+      "reported_improvement": 26.34508959685785,
+      "improvement_definition": "reduction from baseline (%)"
+    },
+    {
+      "metric": "Grid export",
+      "unit": "kWh",
+      "no_battery": 2217.9486111237206,
+      "pv_priority": 659.2196557226863,
+      "strategy_minus_baseline": -1558.7289554010345,
+      "reported_improvement": 70.27795628733286,
+      "improvement_definition": "reduction from baseline (%)"
+    },
+    {
+      "metric": "Electricity cost",
+      "unit": "currency",
+      "no_battery": 1540.8814007703465,
+      "pv_priority": 1045.4165447407374,
+      "strategy_minus_baseline": -495.4648560296091,
+      "reported_improvement": 32.15463927216637,
+      "improvement_definition": "reduction from baseline (%)"
+    },
+    {
+      "metric": "Operational carbon",
+      "unit": "kgCO2",
+      "no_battery": 791.5336659183953,
+      "pv_priority": 573.9284375868612,
+      "strategy_minus_baseline": -217.60522833153414,
+      "reported_improvement": 27.491594824214154,
+      "improvement_definition": "reduction from baseline (%)"
+    },
+    {
+      "metric": "Peak grid import",
+      "unit": "kW",
+      "no_battery": 4.9387665,
+      "pv_priority": 4.9387665,
+      "strategy_minus_baseline": 0.0,
+      "reported_improvement": 0.0,
+      "improvement_definition": "reduction from baseline (%)"
+    },
+    {
+      "metric": "PV self-consumption",
+      "unit": "%",
+      "no_battery": 63.446279532854014,
+      "pv_priority": 89.13548722414872,
+      "strategy_minus_baseline": 25.689207691294705,
+      "reported_improvement": 25.689207691294705,
+      "improvement_definition": "percentage-point increase"
+    },
+    {
+      "metric": "Self-sufficiency",
+      "unit": "%",
+      "no_battery": 43.708544177788426,
+      "pv_priority": 58.53857864952572,
+      "strategy_minus_baseline": 14.830034471737292,
+      "reported_improvement": 14.830034471737292,
+      "improvement_definition": "percentage-point increase"
+    }
+  ],
+  "daily_peak_diagnostics": {
+    "days_total": 365,
+    "days_with_lower_peak": 185,
+    "days_with_unchanged_peak": 180,
+    "mean_daily_peak_reduction_kw": 0.43696173165944546,
+    "median_daily_peak_reduction_kw": 0.03589993199999997,
+    "maximum_daily_peak_reduction_kw": 2.3443001299999997
+  },
+  "annual_peak_diagnostic": {
+    "source_time_step": 4195,
+    "source_month": 1,
+    "source_hour_1_to_24": 19,
+    "baseline_peak_kw": 4.9387665,
+    "pv_priority_import_kw": 4.9387665,
+    "soc_start_kwh": 0.0,
+    "battery_exchange_kwh": 0.0,
+    "reason_peak_unchanged": "Battery SOC was zero at the annual peak hour under the myopic PV-priority rule."
+  },
+  "validation_checks_passed": 16,
+  "validation_checks_total": 16
+}

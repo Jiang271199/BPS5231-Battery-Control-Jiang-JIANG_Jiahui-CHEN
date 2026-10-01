@@ -1,0 +1,16 @@
+check,passed,detail
+8760 hourly records,True,n=8760
+No missing numeric outputs,True,all modeled numeric fields checked
+SOC non-negative,True,minimum=0.000000000000 kWh
+SOC within contemporaneous capacity,True,max excess=0.000e+00 kWh
+Power limit respected,True,max exchange=3.542717 kWh/h
+Charging only from PV surplus,True,positive battery exchange checked against baseline net load
+Discharging only during load deficit,True,negative battery exchange checked against baseline net load
+No battery-induced grid export,True,strategy export does not exceed baseline beyond the 2e-5 kWh legacy capacity-clamp tolerance
+No grid charging,True,grid import is zero in all charging hours
+Hourly electrical balance,True,maximum absolute error=8.882e-16 kWh
+Import/export identity,True,maximum absolute error=0.000e+00 kWh
+Capacity monotonically non-increasing,True,"start=6.400000, end=6.385659 kWh"
+Annual electrical balance,True,residual=-3.411e-13 kWh
+Baseline recomputation matches saved Step 6,True,five primary KPIs independently recomputed
+Terminal SOC reported,True,"initial=0.000000, final=0.000000 kWh"

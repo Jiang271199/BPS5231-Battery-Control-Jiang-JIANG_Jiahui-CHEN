@@ -1,0 +1,8 @@
+metric,unit,baseline,pv_priority,absolute_change_strategy_minus_baseline,reported_improvement,improvement_definition,interpretation
+Grid import,kWh,4957.950569915728,3651.774050103505,-1306.176519812223,26.34508959685785,reduction from baseline (%),Lower is better
+Grid export,kWh,2217.9486111237206,659.2196557226863,-1558.7289554010345,70.27795628733286,reduction from baseline (%),Lower means more PV self-use
+Electricity cost,currency,1540.8814007703465,1045.4165447407374,-495.4648560296091,32.15463927216637,reduction from baseline (%),Lower is better
+Carbon emissions,kgCO2,791.5336659183953,573.9284375868612,-217.60522833153414,27.491594824214154,reduction from baseline (%),Lower is better
+Peak grid import,kW,4.9387665,4.9387665,0.0,0.0,reduction from baseline (%),Lower is better
+PV self-consumption,%,63.446279532854014,89.13548722414872,25.689207691294705,25.689207691294705,percentage-point change,Higher is better
+Self-sufficiency,%,43.708544177788426,58.53857864952572,14.830034471737292,14.830034471737292,percentage-point change,Higher is better

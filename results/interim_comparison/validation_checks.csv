@@ -1,0 +1,17 @@
+check,passed,detail
+Step 7 validation inherited,True,15 of 15 prior checks passed
+8760 hourly records,True,n=8760
+No missing comparison outputs,True,four primary comparison fields checked
+Baseline import reconciles,True,hourly sum=4957.950569916 kWh
+PV-priority import reconciles,True,hourly sum=3651.774050104 kWh
+Cost saving identity,True,saving=495.464856030
+Carbon reduction identity,True,reduction=217.605228332 kgCO2
+Import reduction and discharge reconcile,True,difference=-0.000587833 kWh; within documented legacy clamp artifact
+Export reduction and charge reconcile,True,difference=-0.000587833 kWh; within documented legacy clamp artifact
+Monthly import reconciles,True,12 source-month groups
+Monthly cost reconciles,True,12 source-month groups
+Monthly carbon reconciles,True,12 source-month groups
+No daily peak increase,True,minimum daily reduction=0.000000000000 kW
+Annual peak value reconciles,True,peak=4.9387665 kW
+Terminal SOC is neutral,True,"initial=0.000000, final=0.000000 kWh"
+KPI table complete,True,seven pre-defined KPIs
