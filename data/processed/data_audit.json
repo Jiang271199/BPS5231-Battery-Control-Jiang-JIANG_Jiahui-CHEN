@@ -1,0 +1,228 @@
+{
+  "dataset": "CityLearn Challenge 2022 Phase All",
+  "building": "Building_5",
+  "time_step_seconds": 3600,
+  "schema_window": [
+    0,
+    8759
+  ],
+  "row_counts": {
+    "building": 8760,
+    "pricing": 8760,
+    "carbon": 8760,
+    "weather": 8760
+  },
+  "source_files": {
+    "Building_5.csv": {
+      "sha256": "0579790ee34c11b8ba6b7430e1b85d0506353399da76621d018b552f8d5d62d9",
+      "bytes": 351598
+    },
+    "pricing.csv": {
+      "sha256": "bb94629d83146658c38015ebf8dade815c2557cd8a6c1abb7e1edc5012a483c6",
+      "bytes": 169776
+    },
+    "carbon_intensity.csv": {
+      "sha256": "3f54295997075a3643a7e5ddee8d8b56fc1c63531ab4387cac77ae1888e1dd93",
+      "bytes": 95442
+    },
+    "weather.csv": {
+      "sha256": "a8b6b70d10fd854b211d63b9376e364f21d227d78ece4fadc38b09d47bb0a75f",
+      "bytes": 690512
+    },
+    "schema.json": {
+      "sha256": "b1c3546de688298f428ca61d6300826dba0f73147534d3953b9378db789db6c3",
+      "bytes": 17828
+    }
+  },
+  "schema_parameters": {
+    "pv_nominal_power_kw": 4.0,
+    "pv_generation_mode": "per_kw",
+    "battery_capacity_kwh": 6.4,
+    "battery_nominal_power_kw": 5.0,
+    "battery_efficiency_parameter": 0.9,
+    "battery_capacity_loss_coefficient": 1e-05,
+    "battery_loss_coefficient": 0.0,
+    "battery_depth_of_discharge_explicit": null,
+    "battery_initial_soc_explicit": null
+  },
+  "source_calendar": {
+    "first_row": {
+      "month": 7.0,
+      "hour": 24.0,
+      "day_type": 7.0
+    },
+    "second_row": {
+      "month": 8.0,
+      "hour": 1.0,
+      "day_type": 1.0
+    },
+    "last_row": {
+      "month": 7.0,
+      "hour": 23.0,
+      "day_type": 1.0
+    },
+    "full_timestamp_columns_present": false,
+    "time_alignment_method": "same row index specified by the dataset schema; independent clock validation is impossible"
+  },
+  "primary_column_audit": {
+    "building": {
+      "non_shiftable_load": {
+        "rows": 8760,
+        "missing": 0,
+        "zero_count": 1,
+        "negative_count": 0,
+        "min": 0.0,
+        "max": 4.9387665,
+        "mean": 1.0054387192324301,
+        "std": 0.82876146846679,
+        "unique": 8380
+      },
+      "solar_generation": {
+        "rows": 8760,
+        "missing": 0,
+        "zero_count": 4483,
+        "negative_count": 0,
+        "min": 0.0,
+        "max": 818.2875,
+        "mean": 173.16327687454566,
+        "std": 247.01823015924614,
+        "unique": 4213
+      },
+      "cooling_demand": {
+        "rows": 8760,
+        "missing": 0,
+        "zero_count": 8760,
+        "negative_count": 0,
+        "min": 0.0,
+        "max": 0.0,
+        "mean": 0.0,
+        "std": 0.0,
+        "unique": 1
+      },
+      "heating_demand": {
+        "rows": 8760,
+        "missing": 0,
+        "zero_count": 8760,
+        "negative_count": 0,
+        "min": 0.0,
+        "max": 0.0,
+        "mean": 0.0,
+        "std": 0.0,
+        "unique": 1
+      },
+      "dhw_demand": {
+        "rows": 8760,
+        "missing": 0,
+        "zero_count": 8760,
+        "negative_count": 0,
+        "min": 0.0,
+        "max": 0.0,
+        "mean": 0.0,
+        "std": 0.0,
+        "unique": 1
+      },
+      "indoor_dry_bulb_temperature": {
+        "rows": 8760,
+        "missing": 8760,
+        "zero_count": 0,
+        "negative_count": 0,
+        "min": null,
+        "max": null,
+        "mean": null,
+        "std": null,
+        "unique": 0
+      },
+      "indoor_relative_humidity": {
+        "rows": 8760,
+        "missing": 8760,
+        "zero_count": 0,
+        "negative_count": 0,
+        "min": null,
+        "max": null,
+        "mean": null,
+        "std": null,
+        "unique": 0
+      }
+    },
+    "pricing": {
+      "electricity_pricing": {
+        "rows": 8760,
+        "missing": 0,
+        "zero_count": 0,
+        "negative_count": 0,
+        "min": 0.21,
+        "max": 0.54,
+        "mean": 0.2731312785388128,
+        "std": 0.1178026978827731,
+        "unique": 5
+      }
+    },
+    "carbon": {
+      "carbon_intensity": {
+        "rows": 8760,
+        "missing": 0,
+        "zero_count": 0,
+        "negative_count": 0,
+        "min": 0.07038287,
+        "max": 0.28179622,
+        "mean": 0.15653071584075343,
+        "std": 0.03536975815072071,
+        "unique": 8754
+      }
+    },
+    "weather": {
+      "outdoor_dry_bulb_temperature": {
+        "rows": 8760,
+        "missing": 0,
+        "zero_count": 0,
+        "negative_count": 0,
+        "min": 5.6,
+        "max": 32.2,
+        "mean": 16.83745433789954,
+        "std": 3.564816164415142,
+        "unique": 98
+      },
+      "direct_solar_irradiance": {
+        "rows": 8760,
+        "missing": 0,
+        "zero_count": 4502,
+        "negative_count": 0,
+        "min": 0.0,
+        "max": 953.0,
+        "mean": 201.23150684931508,
+        "std": 296.19330141126255,
+        "unique": 898
+      },
+      "diffuse_solar_irradiance": {
+        "rows": 8760,
+        "missing": 0,
+        "zero_count": 4174,
+        "negative_count": 0,
+        "min": 0.0,
+        "max": 1017.0,
+        "mean": 208.2821917808219,
+        "std": 292.79940729559524,
+        "unique": 974
+      }
+    }
+  },
+  "derived_screening": {
+    "annual_load_kwh": 8807.643180476087,
+    "annual_pv_kwh": 6067.64122168408,
+    "pv_peak_kwh_in_one_hour": 3.2731500000000002,
+    "load_peak_kwh_in_one_hour": 4.9387665,
+    "pv_to_load_annual_ratio": 0.6889063393410655,
+    "potential_pv_surplus_hours": 2586,
+    "potential_grid_import_hours": 6174,
+    "price_carbon_pearson_r": 0.31301315554603415,
+    "pv_profile_irradiance_pearson_r": 0.7739506658634882,
+    "pv_positive_when_irradiance_zero_hours": 0
+  },
+  "known_limits": [
+    "The selected building is from a residential dataset, not an office dataset.",
+    "Input CSVs do not contain complete timestamps; positional alignment is assumed from schema.",
+    "Indoor temperature and humidity are entirely missing in this building file.",
+    "Cooling/heating/DHW demand columns are zero and do not isolate end uses.",
+    "CityLearn package execution and battery dynamics are not validated by this data-only audit."
+  ]
+}
