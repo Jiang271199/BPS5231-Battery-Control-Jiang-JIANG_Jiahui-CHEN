@@ -6,6 +6,16 @@ This project investigates how battery-control decisions affect electricity cost,
 
 The interim study establishes a reproducible data pipeline, a no-battery reference, and a transparent PV-priority controller. The final study will extend the comparison to peak-shaving, price-responsive, carbon-responsive, and multi-objective control. Bayesian optimisation will be used to search the parameter space of the multi-objective controller, while the battery simulation and KPI calculations remain deterministic and physically constrained.
 
+## Repository navigation
+
+- [EDA findings](docs/05_EDA_Findings.md)
+- [No-battery baseline findings](docs/06_Baseline_Findings.md)
+- [PV-priority battery findings](docs/07_PV_Priority_Findings.md)
+- [Interim comparison findings](docs/08_Interim_Comparison_Findings.md)
+- [Final-stage AI-assisted method](docs/09_Final_Method.md)
+- [EDA notebook](notebooks/01_EDA.ipynb)
+- [Baseline and PV-priority notebook](notebooks/02_Baseline_and_PV_Priority.ipynb)
+
 ## Research questions
 
 1. How do alternative battery-control strategies change electricity cost, imported operational carbon, and peak grid import under identical boundary conditions?
@@ -18,11 +28,11 @@ The case study is `Building_5` from the CityLearn Challenge 2022 Phase All datas
 
 | File | Information used |
 |---|---|
-| `Building_5.csv` | Building electricity load, PV profile, and source calendar labels |
-| `pricing.csv` | Hourly electricity price |
-| `carbon_intensity.csv` | Hourly grid-carbon intensity |
-| `weather.csv` | Outdoor temperature, humidity, and solar irradiance |
-| `schema.json` | PV, battery, and dataset configuration |
+| [`Building_5.csv`](data/raw/Building_5.csv) | Building electricity load, PV profile, and source calendar labels |
+| [`pricing.csv`](data/raw/pricing.csv) | Hourly electricity price |
+| [`carbon_intensity.csv`](data/raw/carbon_intensity.csv) | Hourly grid-carbon intensity |
+| [`weather.csv`](data/raw/weather.csv) | Outdoor temperature, humidity, and solar irradiance |
+| [`schema.json`](data/raw/schema.json) | PV, battery, and dataset configuration |
 
 The selected system includes a 4.0 kW PV array, a 6.4 kWh battery, and 5.0 kW nominal battery power. Annual building load is 8,807.64 kWh and annual PV generation is 6,067.64 kWh. The source files contain no missing values in the load, PV, price, or carbon variables used in the analysis.
 
@@ -108,6 +118,9 @@ BPS5231_Steps9_10_Submission_Package/
 └── requirements.txt
 ```
 
+Key documentation: [05 EDA](docs/05_EDA_Findings.md) · [06 Baseline](docs/06_Baseline_Findings.md) · [07 PV Priority](docs/07_PV_Priority_Findings.md) · [08 Interim Comparison](docs/08_Interim_Comparison_Findings.md) · [09 Final Method](docs/09_Final_Method.md)
+
+
 ## Reproducing the interim analysis
 
 Python 3.11 is recommended. From the project directory, install the required packages:
@@ -118,10 +131,19 @@ python -m pip install -r requirements.txt
 
 The interim analysis can be reproduced by running the two notebooks in order:
 
-1. `notebooks/01_EDA.ipynb`
-2. `notebooks/02_Baseline_and_PV_Priority.ipynb`
+1. [`01_EDA.ipynb`](notebooks/01_EDA.ipynb) — data audit and exploratory data analysis
+2. [`02_Baseline_and_PV_Priority.ipynb`](notebooks/02_Baseline_and_PV_Priority.ipynb) — no-battery baseline, PV-priority control, and Interim comparison
 
 Alternatively, run the analysis scripts directly:
+
+Script files:
+
+- [`prepare_steps_1_to_4.py`](prepare_steps_1_to_4.py)
+- [`05_exploratory_data_analysis.py`](05_exploratory_data_analysis.py)
+- [`06_no_battery_baseline.py`](06_no_battery_baseline.py)
+- [`07_pv_priority_battery.py`](07_pv_priority_battery.py)
+- [`08_interim_comparative_analysis.py`](08_interim_comparative_analysis.py)
+- [`requirements.txt`](requirements.txt)
 
 ```bash
 python 05_exploratory_data_analysis.py
@@ -137,6 +159,17 @@ python prepare_steps_1_to_4.py --source-dir /path/to/CityLearn_2022_Phase_All_Co
 ```
 
 The notebooks call the reviewed analysis scripts rather than maintaining separate implementations. Monetary results are reported as `currency units` because the source data do not identify a specific currency.
+
+## Key outputs
+
+- [EDA figures](figures/eda/)
+- [Baseline figures](figures/baseline/)
+- [PV-priority figures](figures/pv_priority/)
+- [Interim-comparison figures](figures/interim_comparison/)
+- [EDA results](results/eda/)
+- [Baseline results](results/baseline/)
+- [PV-priority results](results/pv_priority/)
+- [Interim-comparison results](results/interim_comparison/)
 
 ## Limitations
 
