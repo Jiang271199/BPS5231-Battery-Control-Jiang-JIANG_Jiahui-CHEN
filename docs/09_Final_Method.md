@@ -8,7 +8,7 @@ The study will answer three questions:
 
 1. How do PV-priority, peak-shaving, price-responsive and carbon-responsive control change annual import cost, operational carbon and peak grid import relative to the same no-battery baseline?
 2. Which objectives conflict, and when do those conflicts occur?
-3. Which non-dominated control settings provide defensible compromises among cost, carbon and peak demand?
+3. Can simulation-guided Bayesian optimisation identify control settings that provide defensible Pareto compromises among cost, carbon and peak demand?
 
 The analysis is a deterministic, single-building case study. It does not claim statistical generalisation to offices, other climates or other tariff structures.
 
@@ -47,7 +47,7 @@ All comparisons will use identical initial SOC. Candidate strategies must finish
 | S2 | Peak shaving | Current net load, target peak, calibrated peak-hour window and SOC reserve | Allowed only below a charging threshold | Reduce maximum import |
 | S3 | Price response | Current tariff and SOC | Yes at low-price hours | Reduce import cost |
 | S4 | Carbon response | Current carbon intensity and SOC | Yes at low-carbon hours | Reduce operational carbon |
-| S5 | Multi-objective control | Price, carbon, net-load target and SOC | Parameter dependent | Generate Pareto compromises |
+| S5 | AI-assisted multi-objective control | Price, carbon, pre-battery import and SOC | Parameter dependent | Use Bayesian optimisation to identify Pareto compromises |
 
 S0 and S1 are already implemented. S2–S5 are Final-stage methods and must not be presented as completed results in the Interim submission.
 
@@ -85,35 +85,33 @@ Thresholds will come from calibration-period carbon quantiles: the 10th–40th p
 
 Price and carbon controls will remain separate before multi-objective optimisation. The observed Pearson correlation of 0.313 between the two signals indicates partial alignment only; it does not establish either synergy or conflict by itself.
 
-## 7. Multi-objective search and Pareto analysis (S5)
+## 7. AI-assisted multi-objective search and Pareto analysis (S5)
 
-S5 will use a transparent parameter sweep rather than reinforcement learning. At each hour, price, carbon intensity and pre-battery import will first be normalised with calibration-period bounds. A control-priority score will then be calculated as
+S5 will add an AI-assisted parameter-search layer to the deterministic battery-control model. Instead of relying on an exhaustive parameter sweep, **Bayesian optimisation** will use feedback from previous battery simulations to decide which controller settings should be evaluated next. The physical battery equations, accounting rules and hourly simulation remain unchanged; the AI-assisted component is used only to search the controller parameter space more efficiently.
+
+At each hour, electricity price, grid-carbon intensity and pre-battery grid import will be normalised using calibration-period bounds. A control-priority score will be calculated as
 
 \[
 s_t = w_p z(p_t) + w_c z(c_t) + w_d z(I_t^{pre}),
 \]
 
-where non-negative weights sum to one. A high score permits discharge toward the building deficit, while a low score permits grid charging up to the maximum charging SOC. PV-surplus charging retains priority whenever pre-battery exchange is negative, and intentional battery export remains prohibited. Candidate policies therefore combine the score weights and charge/discharge thresholds with the peak target, reserve SOC and maximum charging SOC. A coarse grid will first remove infeasible regions, followed by a reproducible random or Latin-hypercube sample with a fixed seed if the grid becomes too large.
+where the non-negative weights \(w_p\), \(w_c\) and \(w_d\) sum to one. A high score permits discharge toward the building deficit, while a low score permits charging up to the maximum charging SOC. PV-surplus charging retains priority whenever pre-battery exchange is negative, and intentional battery export remains prohibited.
 
-For every feasible candidate (x), the study will minimise the raw objective vector
+The candidate parameter vector may include the price, carbon and pre-battery-import weights; charge/discharge score thresholds; peak-import target; reserve SOC fraction; and maximum charging SOC.
 
-\[
-f(x) = [C(x),\ M(x),\ P(x)].
-\]
+For each proposed parameter vector \(x\), the same deterministic battery simulation will return \(f(x)=[C(x),M(x),P(x)]\), where \(C\) is electricity cost, \(M\) is imported operational carbon and \(P\) is peak grid import.
 
-A candidate (a) dominates (b) only when it is no worse in all three objectives and strictly better in at least one. The non-dominated candidates form the Pareto set. PV self-consumption, self-sufficiency and battery throughput will be displayed as secondary attributes and will not be hidden inside the three primary objectives.
+Bayesian optimisation will maintain a **surrogate model** of the relationship between tested controller parameters and simulation performance. An **acquisition function** will use the surrogate model and its uncertainty to select subsequent parameter combinations that are informative or potentially improve the observed objective trade-offs. The optimiser therefore learns from simulation feedback, but it does not modify the battery physics or accounting equations.
 
-Three representative Pareto solutions will be reported:
+Because the study has three objectives, Bayesian optimisation is used to generate promising feasible candidates, while the final decision analysis remains explicitly Pareto-based. A candidate dominates another only when it is no worse in cost, carbon and peak demand and is strictly better in at least one objective. The non-dominated candidates form the Pareto set. PV self-consumption, self-sufficiency and battery throughput will be reported as secondary attributes.
 
-- minimum-cost solution;
-- minimum-carbon solution;
-- minimum-peak solution;
+The Final study will report the minimum-cost, minimum-carbon and minimum-peak feasible solutions, together with one balanced Pareto solution. The balanced solution will be selected by minimum Euclidean distance to the normalised ideal point after min-max normalisation within the calibration Pareto set. This selection rule will be frozen before hold-out evaluation.
 
-One balanced solution may also be reported. It will be chosen by minimum Euclidean distance to the normalised ideal point after min–max normalisation within the calibration Pareto set. This selection rule will be frozen before hold-out evaluation. A weighted sum will not be used to define the Pareto frontier because it can miss non-convex trade-offs.
+The Bayesian-optimisation implementation, surrogate-model choice, acquisition function, search bounds, initial sampling rule, random seed and evaluation budget will be recorded in the Final code and report and fixed before hold-out evaluation. S5 will be described as **AI-assisted parameter optimisation**, not as an AI battery-physics model or as evidence that the Interim S0/S1 results were generated by AI.
 
 ## 8. Calibration and evaluation protocol
 
-The usable source-year sequence runs from August to July, but source step 0 is a leading wraparound record labelled July, hour 24. Step 0 will serve only as a warm-up/initialisation record in split-period analysis. Source steps after that record through the end of March will form the calibration period, and April through source step 8759 will remain a chronological hold-out set. Parameter thresholds and the balanced Pareto solution will be chosen only from the calibration period.
+The usable source-year sequence runs from August to July, but source step 0 is a leading wraparound record labelled July, hour 24. Step 0 will serve only as a warm-up/initialisation record in split-period analysis. Source steps after that record through the end of March will form the calibration period, and April through source step 8759 will remain a chronological hold-out set. Parameter thresholds, Bayesian-optimisation search decisions and the balanced Pareto solution will be determined only from the calibration period.
 
 After parameters are frozen:
 
@@ -138,12 +136,18 @@ Each strategy must pass the existing physical and accounting checks plus the fol
 - KPI differences reproduce independent hourly summations.
 - Pareto dominance is recalculated from raw cost, carbon and peak values rather than rounded display values.
 - Parameter selection uses calibration data only.
+- Bayesian optimisation does not access hold-out KPI values during search.
+- The surrogate model, acquisition function, search bounds, initial samples, random seed and evaluation budget are recorded for reproducibility.
 
 The Final report will distinguish three types of statement: model facts from the schema, study assumptions chosen by the group, and simulation results. It will not claim that a strategy is “optimal” outside the tested parameter space or the single selected building.
 
 ## 10. Minimum Final outputs
 
-The Final submission should include a common KPI table for S0–S5, annual net-load and SOC plots, a diagnostic plot around the annual peak, cost and carbon attribution plots, and a two-dimensional Pareto plot with the third objective encoded by colour. A supplementary table should list every non-dominated candidate and its parameters. The discussion should explain why the best strategy differs by objective and whether the balanced solution remains credible on the hold-out period.
+The Final submission should include a common KPI table for S0–S5, annual net-load and SOC plots, a diagnostic plot around the annual peak, cost and carbon attribution plots, and a two-dimensional Pareto plot with the third objective encoded by colour. A supplementary table should list every non-dominated candidate and its parameters. The Final submission should also document the Bayesian-optimisation configuration and show the optimisation history or convergence of evaluated candidates. The discussion should explain why the best strategy differs by objective and whether the balanced solution remains credible on the hold-out period.
+
+## 11. AI-method implementation note
+
+The Interim submission contains no AI-generated performance result. S0 and S1 remain deterministic rule-based scenarios. Bayesian optimisation is a planned Final-stage method and will be implemented only after the optimiser configuration and software dependency are fixed. The Final report will document the exact Python package and version used for Bayesian optimisation.
 
 ## Sources used for the model boundary
 
