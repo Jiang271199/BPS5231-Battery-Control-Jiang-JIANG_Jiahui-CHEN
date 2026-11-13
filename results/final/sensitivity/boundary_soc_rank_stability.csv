@@ -1,0 +1,15 @@
+window,strategy,electricity_cost_currency_rank_range,carbon_emissions_kgco2_rank_range,peak_grid_import_kw_rank_range,electricity_cost_currency_change_vs_S1_pct_range,carbon_emissions_kgco2_change_vs_S1_pct_range,peak_grid_import_kw_change_vs_S1_pct_range
+calibration,S1 PV priority,2-2,1-1,5-5,0.0 to 0.0,0.0 to 0.0,0.0 to 0.0
+calibration,S2 peak shaving,4-4,2-2,2-2,3.7 to 3.7,3.4 to 3.5,-15.9 to -15.9
+calibration,S3 price response,1-1,6-6,5-5,-0.3 to -0.3,14.0 to 14.1,0.0 to 0.0
+calibration,S4 carbon response,6-6,5-5,5-5,12.6 to 12.7,9.2 to 9.4,0.0 to 0.0
+calibration,S5 balanced,5-5,4-4,2-2,5.0 to 5.0,5.3 to 5.4,-15.9 to -15.9
+calibration,S5 min_cost,3-3,3-3,4-4,3.2 to 3.2,4.0 to 4.0,-6.4 to -6.4
+calibration,S5 min_peak,7-7,7-7,1-1,14.2 to 14.3,15.9 to 16.0,-43.3 to -43.3
+holdout,S1 PV priority,1-1,1-1,5-5,0.0 to 0.0,0.0 to 0.0,0.0 to 0.0
+holdout,S2 peak shaving,2-2,2-2,2-2,11.0 to 11.1,8.5 to 8.6,-19.0 to -19.0
+holdout,S3 price response,3-4,6-6,7-7,11.1 to 11.5,32.9 to 33.5,28.6 to 28.6
+holdout,S4 carbon response,6-6,5-5,5-5,33.7 to 34.2,23.7 to 24.3,0.0 to 0.0
+holdout,S5 balanced,5-5,4-4,2-2,16.9 to 17.2,15.2 to 15.6,-19.0 to -19.0
+holdout,S5 min_cost,3-4,3-3,4-4,11.3 to 11.6,11.5 to 11.9,-5.0 to -5.0
+holdout,S5 min_peak,7-7,7-7,1-1,36.4 to 36.9,37.3 to 37.9,-27.1 to -27.1

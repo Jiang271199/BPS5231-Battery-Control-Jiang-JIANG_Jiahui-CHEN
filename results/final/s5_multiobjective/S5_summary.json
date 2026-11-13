@@ -1,0 +1,21 @@
+{
+  "algorithm": "ParEGO: augmented-Chebyshev random scalarisation, GP (Matern 5/2 ARD + white noise, hyperparameters fitted by marginal likelihood), expected improvement over 2000 uniform + 400 local proposals",
+  "seed": 5231,
+  "initial_evaluations": 20,
+  "total_evaluations": 80,
+  "normalisation_bounds_from_calibration": [
+    0.21,
+    0.54,
+    0.07038287,
+    0.26562044,
+    3.109139831680005
+  ],
+  "pareto_candidates": 9,
+  "selected_evaluations": {
+    "min_cost": 60,
+    "min_carbon": 60,
+    "min_peak": 78,
+    "balanced": 67
+  },
+  "boundary": "periodic SOC on the calibration window during search; periodic full year for reporting"
+}

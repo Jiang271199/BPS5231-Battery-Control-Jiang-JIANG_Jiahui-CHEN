@@ -1,184 +1,106 @@
-# Towards AI-Assisted Multi-Objective Battery Control for Cost, Operational Carbon, and Peak Grid Import in a Residential Building
+# Multi-Objective Battery Control in a Residential Building
 
-## Project overview
+Reproducible research code for BPS5231. Case: CityLearn 2022 Challenge (Phase All) `Building_5`.
+Load, PV, tariff and grid carbon intensity are fixed; we compare how the **same battery**
+(6.4 kWh, 5 kW) should be controlled to trade off **import cost**, **operational (import) carbon**
+and **peak grid import**.
 
-This project investigates how battery-control decisions affect electricity cost, imported operational carbon, and peak grid import in a grid-connected residential building. The analysis uses a common building, photovoltaic system, battery model, tariff, and grid-carbon signal so that differences in performance can be attributed to the control strategy rather than to changes in the physical system.
-
-The interim study establishes a reproducible data pipeline, a no-battery reference, and a transparent PV-priority controller. The final study will extend the comparison to peak-shaving, price-responsive, carbon-responsive, and multi-objective control. Bayesian optimisation will be used to search the parameter space of the multi-objective controller, while the battery simulation and KPI calculations remain deterministic and physically constrained.
-
-## Repository navigation
-
-- [EDA findings](docs/05_EDA_Findings.md)
-- [No-battery baseline findings](docs/06_Baseline_Findings.md)
-- [PV-priority battery findings](docs/07_PV_Priority_Findings.md)
-- [Interim comparison findings](docs/08_Interim_Comparison_Findings.md)
-- [Final-stage AI-assisted method](docs/09_Final_Method.md)
-- [EDA notebook](notebooks/01_EDA.ipynb)
-- [Baseline and PV-priority notebook](notebooks/02_Baseline_and_PV_Priority.ipynb)
-
-## Research questions
-
-1. How do alternative battery-control strategies change electricity cost, imported operational carbon, and peak grid import under identical boundary conditions?
-2. Where do the three objectives align, and where do they conflict?
-3. Can simulation-guided Bayesian optimisation identify control settings that provide defensible Pareto compromises among cost, carbon, and peak demand?
-
-## Case study and data
-
-The case study is `Building_5` from the CityLearn Challenge 2022 Phase All dataset. It represents a residential building in Fontana, California. The study uses 8,760 hourly observations and the following source files:
-
-| File | Information used |
-|---|---|
-| [`Building_5.csv`](data/raw/Building_5.csv) | Building electricity load, PV profile, and source calendar labels |
-| [`pricing.csv`](data/raw/pricing.csv) | Hourly electricity price |
-| [`carbon_intensity.csv`](data/raw/carbon_intensity.csv) | Hourly grid-carbon intensity |
-| [`weather.csv`](data/raw/weather.csv) | Outdoor temperature, humidity, and solar irradiance |
-| [`schema.json`](data/raw/schema.json) | PV, battery, and dataset configuration |
-
-The selected system includes a 4.0 kW PV array, a 6.4 kWh battery, and 5.0 kW nominal battery power. Annual building load is 8,807.64 kWh and annual PV generation is 6,067.64 kWh. The source files contain no missing values in the load, PV, price, or carbon variables used in the analysis.
-
-The original data do not provide complete timestamps. Records are therefore aligned by source row order, and calendar dates are not reconstructed. The study treats the building load and PV generation as fixed boundary inputs; envelope design, indoor comfort, and HVAC end uses are outside the available data boundary.
-
-## Model and accounting boundary
-
-For each hourly time step, net grid exchange is calculated from building load, PV generation, and realised AC-side battery exchange. Positive net exchange is grid import and negative net exchange is export. Electricity cost and operational carbon are calculated from imports only because the dataset provides neither an export tariff nor a defensible exported-carbon credit.
-
-The main performance indicators are:
-
-- annual grid import;
-- annual grid export;
-- electricity cost;
-- imported operational carbon;
-- peak hourly grid import;
-- PV self-consumption;
-- self-sufficiency; and
-- battery throughput.
-
-All strategies use the same battery parameters and accounting rules. Initial state of charge is identical across scenarios, and candidate final strategies must finish within 0.05 kWh of the initial state of charge. Intentional battery export is prohibited.
-
-## Interim scenarios
-
-Two scenarios have been implemented:
-
-- **S0 — No battery:** the PV system remains active, while battery charge and discharge are fixed at zero.
-- **S1 — PV priority:** PV surplus charges the battery, and the battery discharges only against a simultaneous building-load deficit. Grid charging and intentional battery export are not allowed.
-
-The implementation reproduces the relevant CityLearn v1.3.6 storage equations with the local schema parameters. It is a local model reproduction rather than a complete CityLearn engine execution. Physical and accounting checks are applied to hourly energy balance, battery power, state of charge, import and export, and annual reconciliation.
-
-## Interim results
-
-| Indicator | S0 No battery | S1 PV priority | Change |
-|---|---:|---:|---:|
-| Grid import | 4,957.95 kWh | 3,651.77 kWh | −26.35% |
-| Electricity cost | 1,540.88 currency units | 1,045.42 currency units | −32.15% |
-| Imported operational carbon | 791.53 kgCO₂ | 573.93 kgCO₂ | −27.49% |
-| Peak grid import | 4.939 kW | 4.939 kW | 0.00% |
-| PV self-consumption | 63.45% | 89.14% | +25.69 percentage points |
-| Self-sufficiency | 43.71% | 58.54% | +14.83 percentage points |
-
-PV-priority control substantially reduces annual imports, cost, and imported operational carbon by shifting surplus solar generation to later load. It does not reduce the annual maximum grid import. The annual peak occurs at source step 4195, when PV generation and battery state of charge are both zero. The controller lowers the daily maximum in 185 of 365 sequential 24-hour groups, but it does not preserve sufficient energy for the largest annual event. This result motivates an explicit peak target and reserve state-of-charge constraint in the final analysis.
-
-The interim results establish a validated reference and one interpretable control strategy. They do not demonstrate globally optimal cost, carbon, or peak performance.
-
-## Planned final analysis
-
-The final comparison will include:
-
-| Scenario | Control principle | Primary purpose |
+| ID | Strategy | How parameters are chosen |
 |---|---|---|
-| S2 | Peak target with reserve state of charge | Reduce peak grid import |
-| S3 | Low-price charging and high-price discharge | Reduce electricity cost |
-| S4 | Low-carbon charging and high-carbon discharge | Reduce imported operational carbon |
-| S5 | Parameterised multi-objective control | Identify cost-carbon-peak compromises |
+| S0 | No battery | – |
+| S1 | PV priority (charge from PV surplus, discharge to any deficit) | none |
+| S2 | Peak shaving with pre-peak reserve | 12-point grid; min calibration peak s.t. cost and carbon ≤ 1.05 × S1 |
+| S3 | Price response (tariff thresholds) | 90-point grid; min calibration cost |
+| S4 | Carbon response (carbon-intensity thresholds) | 144-point grid; min calibration carbon |
+| S5 | Weighted price/carbon/import score rule, 9 encoded dimensions (8 independent after weight normalisation) | ParEGO (Gaussian-process Bayesian optimisation), 80 evaluations |
+| S6 | 24-h rolling-horizon MPC (benchmark) | fixed weights; perfect or day-ahead persistence forecast |
+| LP | Annual linear-programme bound | relaxed battery benchmark under the study's accounting boundary; not a directly attainable controller |
 
-For S5, Bayesian optimisation will propose combinations of price, carbon, net-load, state-of-charge, and charge/discharge parameters. Each proposal will be evaluated by the same deterministic battery simulation. The optimiser will use the resulting cost, carbon, and peak values to select subsequent candidates; it will not alter the battery equations or accounting rules.
+S1–S6 energy flows and KPIs come from one hourly simulator that reproduces the CityLearn v1.3.6
+`Battery` equations (efficiency and power curves, capacity fade). S0 is calculated directly from
+load and PV; LP rows are outputs of a separate relaxed optimisation model. The battery simulator
+is a local reproduction, not a full CityLearn environment run. Cost and carbon count imports only;
+currency is unspecified in the source data. One building, one supplied year.
 
-Feasible candidates will be evaluated using raw cost, carbon, and peak values. A candidate is Pareto-dominated only if another candidate is no worse in all three objectives and strictly better in at least one. The final study will report minimum-cost, minimum-carbon, and minimum-peak solutions, together with one balanced solution selected by its distance from the normalised ideal point.
+## Key design decisions
 
-Parameters will be selected using the August-to-March portion of the source sequence. April-to-July will remain a chronological hold-out period, and no thresholds will be revised using hold-out results. Full-year replay will be reported only after the parameters have been fixed.
+* **Periodic SOC boundary.** Every simulated window starts with the SOC it ends with (fixed-point
+  iteration, tolerance 1e-4 kWh). No strategy gains or loses stored energy at the edges, so no
+  end-of-horizon "empty the battery" override is needed. The interim study used such an override
+  for the last 24 h, which disabled peak protection on the hold-out's largest-load day and capped
+  every strategy's hold-out peak at 3.840 kW.
+* **Chronological split.** Calibration = source steps 1–5832 (Aug–Mar), used only for parameter
+  selection, simulated on its own with a periodic boundary. Hold-out = steps 5833–8759 (Apr–Jul).
+  Reported calibration/hold-out/full-year KPIs are slices of one full-year periodic run.
+* **Peak** = maximum hourly-average import (kW). Mean monthly peak, top-10-hour mean and P99 are also
+  reported because a single-hour maximum is fragile.
 
-## Repository contents
+## Layout
 
-```text
-BPS5231_Steps9_10_Submission_Package/
-├── data/
-│   ├── raw/                                   # Source-file snapshots
-│   └── processed/                             # Audited hourly inputs
-├── notebooks/
-│   ├── 01_EDA.ipynb
-│   └── 02_Baseline_and_PV_Priority.ipynb
-├── figures/                                   # Generated figures
-├── results/                                   # KPI, diagnostic, and validation outputs
-├── prepare_steps_1_to_4.py
-├── 05_exploratory_data_analysis.py
-├── 06_no_battery_baseline.py
-├── 07_pv_priority_battery.py
-├── 08_interim_comparative_analysis.py
-├── 09_Final_Method.md
-├── build_notebooks.py
-└── requirements.txt
+```
+battery_study/            shared package
+  config.py               paths, split, boundary settings
+  data.py                 input loading
+  battery.py              CityLearn v1.3.6 battery equations, periodic-boundary simulation with convergence check
+  controllers.py          S1–S5 rules (S5 parameter decoding)
+  metrics.py              KPIs, Pareto mask, exact 3-D hypervolume
+  validation.py           11 physical/accounting checks (+ per-strategy rule checks)
+  evaluate.py             calibration scoring and full-year reporting
+  search.py               ParEGO and random search
+  mpc.py                  rolling MPC and annual LP bound
+  style.py                figure style (white background, portable fonts, fixed strategy colours)
+  registry.py             rebuild selected policies from saved parameters
+20_run_rule_strategies.py S0–S4
+21_run_s5_search.py       S5 ParEGO search (seed 5231) and selected solutions
+22_run_search_benchmark.py ParEGO vs random, 10 seeds × 80 evaluations, hypervolume
+23_run_mpc_and_bound.py   S6 MPC variants and LP bounds
+24_run_sensitivity.py     boundary-SOC and feed-in-tariff sensitivity
+25_build_kpi_master.py    unified KPI table and cross-rule Pareto comparison
+26_make_publication_figures.py  Fig01–Fig09 (PNG 300 dpi + PDF)
+run_all.py                runs 20–26 then the tests
+tests/                    regression and invariant tests (pytest)
+results/final/            all final outputs; KPI_master_table.{csv,md}
+figures/publication/      generated publication figures (supplied as a separate upload)
+05–08_*.py               data exploration, S0 baseline and S1 reference
 ```
 
-Key documentation: [05 EDA](docs/05_EDA_Findings.md) · [06 Baseline](docs/06_Baseline_Findings.md) · [07 PV Priority](docs/07_PV_Priority_Findings.md) · [08 Interim Comparison](docs/08_Interim_Comparison_Findings.md) · [09 Final Method](docs/09_Final_Method.md)
+## Reproduction
 
-
-## Reproducing the interim analysis
-
-Python 3.11 is recommended. From the project directory, install the required packages:
+Use Python 3.11.5 with the pinned versions in `requirements.txt`. The orchestration script
+limits numerical-library threads to one per worker and the two parallel analyses to two workers.
+This controls resource use and keeps the included search benchmark reproducible.
 
 ```bash
-python -m pip install -r requirements.txt
+pip install -r requirements.txt
+python run_all.py          # re-run final pipeline; add --interim to re-run 05–08 first
 ```
 
-The interim analysis can be reproduced by running the two notebooks in order:
+`tests/test_battery.py` checks that the package simulator reproduces the interim S1 hourly results
+(`07_pv_priority_battery.py`) to < 1e-12 kWh, that periodic boundaries close, energy balance holds
+for random requests, and that the hypervolume routine is exact on known cases. Figures use Arial if
+installed, otherwise Liberation Sans or DejaVu Sans. The search benchmark and MPC each use at most
+two worker processes; runtime depends on the local CPU and numerical-library versions.
 
-1. [`01_EDA.ipynb`](notebooks/01_EDA.ipynb) — data audit and exploratory data analysis
-2. [`02_Baseline_and_PV_Priority.ipynb`](notebooks/02_Baseline_and_PV_Priority.ipynb) — no-battery baseline, PV-priority control, and Interim comparison
+## Main results (full supplied year, change vs S1)
 
-Alternatively, run the analysis scripts directly:
+See `results/final/KPI_master_table.md` and `results/final/Pareto_reported_rules.csv`.
 
-Script files:
-
-- [`prepare_steps_1_to_4.py`](prepare_steps_1_to_4.py)
-- [`05_exploratory_data_analysis.py`](05_exploratory_data_analysis.py)
-- [`06_no_battery_baseline.py`](06_no_battery_baseline.py)
-- [`07_pv_priority_battery.py`](07_pv_priority_battery.py)
-- [`08_interim_comparative_analysis.py`](08_interim_comparative_analysis.py)
-- [`requirements.txt`](requirements.txt)
-
-```bash
-python 05_exploratory_data_analysis.py
-python 06_no_battery_baseline.py
-python 07_pv_priority_battery.py
-python 08_interim_comparative_analysis.py
-```
-
-To rebuild the processed input data from an original CityLearn 2022 directory, run:
-
-```bash
-python prepare_steps_1_to_4.py --source-dir /path/to/CityLearn_2022_Phase_All_Complete
-```
-
-The notebooks call the reviewed analysis scripts rather than maintaining separate implementations. Monetary results are reported as `currency units` because the source data do not identify a specific currency.
-
-## Key outputs
-
-- [EDA figures](figures/eda/)
-- [Baseline figures](figures/baseline/)
-- [PV-priority figures](figures/pv_priority/)
-- [Interim-comparison figures](figures/interim_comparison/)
-- [EDA results](results/eda/)
-- [Baseline results](results/baseline/)
-- [PV-priority results](results/pv_priority/)
-- [Interim-comparison results](results/interim_comparison/)
-
-## Limitations
-
-This is a deterministic case study of one residential building and one supplied year. The source lacks complete timestamps, usable indoor-comfort variables, and disaggregated HVAC demand. The interim battery model reproduces relevant CityLearn v1.3.6 equations locally but has not been executed as a complete CityLearn environment. The findings should therefore not be generalised to offices, other climates, alternative tariffs, or different battery sizes without additional cases and sensitivity analysis.
-
-## Key sources
-
-- [CityLearn Challenge 2022 data description](https://www.aicrowd.com/challenges/neurips-2022-citylearn-challenge)
-- [CityLearn 2022 challenge and version information](https://www.citylearn.net/citylearn_challenge/2022.html)
-- [CityLearn data-unit contract](https://www.citylearn.net/guides/data_unit_contract.html)
-- [CityLearn v1.3.6 battery implementation](https://github.com/intelligent-environments-lab/CityLearn/blob/v1.3.6/citylearn/energy_model.py)
-- [Nweye et al. (2023), CityLearn Challenge paper](https://proceedings.mlr.press/v220/nweye23a/nweye23a.pdf)
+* S1 PV priority already removes 32.2% of S0 cost and 27.5% of S0 carbon; no rule-based strategy beats
+  it on cost or carbon.
+* Rules buy peak reduction with cost and carbon: S2 −15.9% peak for +5.4% cost / +4.6% carbon;
+  S5 min-peak −43.3% peak for +19.5% / +20.9%.
+* The solution labelled `S5 balanced` is balanced **within the S5 calibration Pareto set**. It is
+  dominated by S2 among the reported rule strategies in calibration, hold-out and full-year comparisons:
+  both have the same period peak, but S2 has lower cost and imported carbon. It must not be described
+  as a cross-strategy Pareto solution. The cross-rule Pareto table is limited to reported solutions,
+  not all 80 S5 candidates.
+* With perfect 24-h forecasts, MPC (balanced weights) reaches −11.5% cost, +0.5% carbon and −42.3%
+  peak. The relaxed LP lower bound is −17.2% cost at a 2.5 kW peak cap. This number is an optimistic
+  benchmark, not evidence that the nonlinear battery simulator can attain it. In this case, the
+  perfect-forecast MPC also indicates that much of the rule-based cost–peak trade-off is due to
+  short-sighted dispatch. With a naive day-ahead persistence forecast the MPC gain largely disappears.
+* ParEGO finds better S5 trade-off sets than equal-budget random search (higher hypervolume in
+  10/10 paired seeds, Wilcoxon p = 0.002) **for this building-year, search space, evaluation budget,
+  and hypervolume reference point**. This is not evidence of general superiority across buildings.
+* Rankings are insensitive to the boundary SOC (0/50/100% or periodic). An export credit ≥ 0.10
+  currency/kWh would make S3 cheaper than S1, so the S3 result depends on the import-only accounting.

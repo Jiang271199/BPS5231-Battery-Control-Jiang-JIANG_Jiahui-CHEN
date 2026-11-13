@@ -1,0 +1,45 @@
+check,passed,strategy
+hourly records cover window,True,S5 min_cost
+numeric outputs finite,True,S5 min_cost
+SOC nonnegative,True,S5 min_cost
+SOC within pre-step capacity,True,S5 min_cost
+AC exchange within power limit,True,S5 min_cost
+hourly electrical balance,True,S5 min_cost
+grid import/export identity,True,S5 min_cost
+no simultaneous import/export,True,S5 min_cost
+no intentional battery export,True,S5 min_cost
+capacity nonincreasing,True,S5 min_cost
+periodic SOC boundary closed (<=1e-3 kWh),True,S5 min_cost
+hourly records cover window,True,S5 min_carbon
+numeric outputs finite,True,S5 min_carbon
+SOC nonnegative,True,S5 min_carbon
+SOC within pre-step capacity,True,S5 min_carbon
+AC exchange within power limit,True,S5 min_carbon
+hourly electrical balance,True,S5 min_carbon
+grid import/export identity,True,S5 min_carbon
+no simultaneous import/export,True,S5 min_carbon
+no intentional battery export,True,S5 min_carbon
+capacity nonincreasing,True,S5 min_carbon
+periodic SOC boundary closed (<=1e-3 kWh),True,S5 min_carbon
+hourly records cover window,True,S5 min_peak
+numeric outputs finite,True,S5 min_peak
+SOC nonnegative,True,S5 min_peak
+SOC within pre-step capacity,True,S5 min_peak
+AC exchange within power limit,True,S5 min_peak
+hourly electrical balance,True,S5 min_peak
+grid import/export identity,True,S5 min_peak
+no simultaneous import/export,True,S5 min_peak
+no intentional battery export,True,S5 min_peak
+capacity nonincreasing,True,S5 min_peak
+periodic SOC boundary closed (<=1e-3 kWh),True,S5 min_peak
+hourly records cover window,True,S5 balanced
+numeric outputs finite,True,S5 balanced
+SOC nonnegative,True,S5 balanced
+SOC within pre-step capacity,True,S5 balanced
+AC exchange within power limit,True,S5 balanced
+hourly electrical balance,True,S5 balanced
+grid import/export identity,True,S5 balanced
+no simultaneous import/export,True,S5 balanced
+no intentional battery export,True,S5 balanced
+capacity nonincreasing,True,S5 balanced
+periodic SOC boundary closed (<=1e-3 kWh),True,S5 balanced

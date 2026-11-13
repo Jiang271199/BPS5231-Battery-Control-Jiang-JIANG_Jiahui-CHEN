@@ -1,0 +1,25 @@
+period,strategy,electricity_cost_currency,carbon_emissions_kgco2,peak_grid_import_kw,pareto_among_reported_rules,dominated_by_reported_rule
+calibration,S0 no battery,1086.9970510877524,569.0915403381534,4.9387665,False,S1 PV priority; S2 peak shaving; S3 price response; S4 carbon response; S5 min_cost = min_carbon; S5 min_peak; S5 balanced
+calibration,S1 PV priority,793.9023772776656,439.93025137679655,4.9387665,True,
+calibration,S2 peak shaving,823.0236427664095,454.93132889752815,4.151883,True,
+calibration,S3 price response,790.6458804008622,501.0653563819943,4.9387665,True,
+calibration,S4 carbon response,894.0746117233738,480.59780226219857,4.9387665,False,S1 PV priority; S2 peak shaving; S5 min_cost = min_carbon; S5 balanced
+calibration,S5 min_cost = min_carbon,819.7004380241008,457.61344747469263,4.623819720669201,True,
+calibration,S5 min_peak,905.6489956006856,509.188183801509,2.799368355105418,True,
+calibration,S5 balanced,833.5137617913717,463.38253718782687,4.151883,False,S2 peak shaving
+holdout,S0 no battery,453.7146343455941,222.3104230844231,3.839883332,False,S1 PV priority; S2 peak shaving; S4 carbon response; S5 min_cost = min_carbon; S5 min_peak; S5 balanced
+holdout,S1 PV priority,251.34445212607193,133.86648371424585,3.839883332,True,
+holdout,S2 peak shaving,279.1196284631528,145.35362667049662,3.109139831680005,True,
+holdout,S3 price response,280.20813808831736,178.68321985348155,4.9387665,False,S1 PV priority; S2 peak shaving
+holdout,S4 carbon response,337.0563899025034,166.31487706676563,3.839883332,False,S1 PV priority; S2 peak shaving; S5 min_cost = min_carbon; S5 balanced
+holdout,S5 min_cost = min_carbon,280.52923706257843,149.75601073305415,3.6476834,False,S2 peak shaving
+holdout,S5 min_peak,343.924638371415,184.53226237614177,2.799368355105418,True,
+holdout,S5 balanced,294.6029303933907,154.70027943550627,3.109139831680005,False,S2 peak shaving
+full_year,S0 no battery,1540.8814007703463,791.5336659183953,4.9387665,False,S1 PV priority; S2 peak shaving; S3 price response; S4 carbon response; S5 min_cost = min_carbon; S5 min_peak; S5 balanced
+full_year,S1 PV priority,1045.4165447407374,573.9284375868612,4.9387665,True,
+full_year,S2 peak shaving,1102.312986566562,600.4166580638434,4.151883,True,
+full_year,S3 price response,1071.0262188753122,679.8822071791228,4.9387665,False,S1 PV priority
+full_year,S4 carbon response,1231.3007169628772,647.0443818247828,4.9387665,False,S1 PV priority; S2 peak shaving; S5 min_cost = min_carbon; S5 balanced
+full_year,S5 min_cost = min_carbon,1100.3993904236795,607.5011607035656,4.623819720669201,True,
+full_year,S5 min_peak,1249.7935133055034,693.8910769379582,2.799368355105418,True,
+full_year,S5 balanced,1128.2864075217624,618.2145191191519,4.151883,False,S2 peak shaving

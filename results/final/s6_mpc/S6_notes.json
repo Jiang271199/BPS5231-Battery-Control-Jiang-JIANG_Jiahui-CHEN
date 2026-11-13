@@ -1,0 +1,6 @@
+{
+  "horizon_h": 24,
+  "carbon_weight_currency_per_kg": 1.7559301486366723,
+  "linear_battery_one_way_efficiency": 0.9486832980505138,
+  "persistence_forecast": "net load and carbon from the same hour of the previous day; tariff known"
+}

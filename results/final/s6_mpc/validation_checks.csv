@@ -1,0 +1,67 @@
+check,passed,strategy
+hourly records cover window,True,S6 MPC perfect cost-only
+numeric outputs finite,True,S6 MPC perfect cost-only
+SOC nonnegative,True,S6 MPC perfect cost-only
+SOC within pre-step capacity,True,S6 MPC perfect cost-only
+AC exchange within power limit,True,S6 MPC perfect cost-only
+hourly electrical balance,True,S6 MPC perfect cost-only
+grid import/export identity,True,S6 MPC perfect cost-only
+no simultaneous import/export,True,S6 MPC perfect cost-only
+no intentional battery export,True,S6 MPC perfect cost-only
+capacity nonincreasing,True,S6 MPC perfect cost-only
+periodic SOC boundary closed (<=1e-3 kWh),True,S6 MPC perfect cost-only
+hourly records cover window,True,S6 MPC perfect cost+peak
+numeric outputs finite,True,S6 MPC perfect cost+peak
+SOC nonnegative,True,S6 MPC perfect cost+peak
+SOC within pre-step capacity,True,S6 MPC perfect cost+peak
+AC exchange within power limit,True,S6 MPC perfect cost+peak
+hourly electrical balance,True,S6 MPC perfect cost+peak
+grid import/export identity,True,S6 MPC perfect cost+peak
+no simultaneous import/export,True,S6 MPC perfect cost+peak
+no intentional battery export,True,S6 MPC perfect cost+peak
+capacity nonincreasing,True,S6 MPC perfect cost+peak
+periodic SOC boundary closed (<=1e-3 kWh),True,S6 MPC perfect cost+peak
+hourly records cover window,True,S6 MPC perfect balanced
+numeric outputs finite,True,S6 MPC perfect balanced
+SOC nonnegative,True,S6 MPC perfect balanced
+SOC within pre-step capacity,True,S6 MPC perfect balanced
+AC exchange within power limit,True,S6 MPC perfect balanced
+hourly electrical balance,True,S6 MPC perfect balanced
+grid import/export identity,True,S6 MPC perfect balanced
+no simultaneous import/export,True,S6 MPC perfect balanced
+no intentional battery export,True,S6 MPC perfect balanced
+capacity nonincreasing,True,S6 MPC perfect balanced
+periodic SOC boundary closed (<=1e-3 kWh),True,S6 MPC perfect balanced
+hourly records cover window,True,S6 MPC perfect peak-heavy
+numeric outputs finite,True,S6 MPC perfect peak-heavy
+SOC nonnegative,True,S6 MPC perfect peak-heavy
+SOC within pre-step capacity,True,S6 MPC perfect peak-heavy
+AC exchange within power limit,True,S6 MPC perfect peak-heavy
+hourly electrical balance,True,S6 MPC perfect peak-heavy
+grid import/export identity,True,S6 MPC perfect peak-heavy
+no simultaneous import/export,True,S6 MPC perfect peak-heavy
+no intentional battery export,True,S6 MPC perfect peak-heavy
+capacity nonincreasing,True,S6 MPC perfect peak-heavy
+periodic SOC boundary closed (<=1e-3 kWh),True,S6 MPC perfect peak-heavy
+hourly records cover window,True,S6 MPC persistence cost+peak
+numeric outputs finite,True,S6 MPC persistence cost+peak
+SOC nonnegative,True,S6 MPC persistence cost+peak
+SOC within pre-step capacity,True,S6 MPC persistence cost+peak
+AC exchange within power limit,True,S6 MPC persistence cost+peak
+hourly electrical balance,True,S6 MPC persistence cost+peak
+grid import/export identity,True,S6 MPC persistence cost+peak
+no simultaneous import/export,True,S6 MPC persistence cost+peak
+no intentional battery export,True,S6 MPC persistence cost+peak
+capacity nonincreasing,True,S6 MPC persistence cost+peak
+periodic SOC boundary closed (<=1e-3 kWh),True,S6 MPC persistence cost+peak
+hourly records cover window,True,S6 MPC persistence balanced
+numeric outputs finite,True,S6 MPC persistence balanced
+SOC nonnegative,True,S6 MPC persistence balanced
+SOC within pre-step capacity,True,S6 MPC persistence balanced
+AC exchange within power limit,True,S6 MPC persistence balanced
+hourly electrical balance,True,S6 MPC persistence balanced
+grid import/export identity,True,S6 MPC persistence balanced
+no simultaneous import/export,True,S6 MPC persistence balanced
+no intentional battery export,True,S6 MPC persistence balanced
+capacity nonincreasing,True,S6 MPC persistence balanced
+periodic SOC boundary closed (<=1e-3 kWh),True,S6 MPC persistence balanced

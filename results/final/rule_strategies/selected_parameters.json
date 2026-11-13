@@ -1,0 +1,39 @@
+{
+  "S2 peak shaving": {
+    "target_kw": 3.109139831680005,
+    "reserve_fraction": 0.25,
+    "ceiling_kw": 0.545826716,
+    "charge_hours": [
+      14,
+      15,
+      16,
+      17,
+      18
+    ],
+    "target_quantile": 0.995,
+    "event_hours": [
+      17,
+      18,
+      19
+    ],
+    "rule": "min calibration peak s.t. cost and carbon <= 1.05 x S1"
+  },
+  "S3 price response": {
+    "low": 0.22,
+    "high": 0.4,
+    "max_soc": 0.5,
+    "ceiling_kw": 4.9387665,
+    "ceiling_label": "no-battery max",
+    "rule": "min calibration cost"
+  },
+  "S4 carbon response": {
+    "low": 0.112122773,
+    "high": 0.16259438199999998,
+    "max_soc": 0.5,
+    "ceiling_kw": 0.545826716,
+    "low_quantile": 0.1,
+    "high_quantile": 0.6,
+    "ceiling_label": "P60",
+    "rule": "min calibration carbon"
+  }
+}

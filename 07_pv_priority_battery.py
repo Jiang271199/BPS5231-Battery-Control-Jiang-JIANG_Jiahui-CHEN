@@ -39,7 +39,7 @@ def legacy_linear_interpolation(x: float, curve: np.ndarray) -> float:
     return float(y0 + slope * (x - x0))
 
 
-def run_battery_controller(df: pd.DataFrame, battery: dict) -> pd.DataFrame:
+def run_battery_controller(df: pd.DataFrame, battery: dict, policy=None) -> pd.DataFrame:
     initial_capacity = float(battery["capacity"])
     nominal_power = float(battery["nominal_power"])
     loss_coefficient = float(battery.get("loss_coefficient", 0.006))
@@ -65,7 +65,7 @@ def run_battery_controller(df: pd.DataFrame, battery: dict) -> pd.DataFrame:
         load = float(row.load_kwh)
         pv = float(row.pv_kwh)
         base_net = load - pv
-        request = -base_net  # +charge for surplus, -discharge for deficit.
+        request = -base_net if policy is None else float(policy(row, soc, capacity, base_net))
 
         soc_start = soc
         capacity_start = capacity

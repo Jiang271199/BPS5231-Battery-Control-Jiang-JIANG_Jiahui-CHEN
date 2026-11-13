@@ -1,0 +1,7 @@
+strategy,forecast,w_price,w_carbon_currency_per_kg,w_peak_currency_per_kw,lp_failures,periodic_passes
+S6 MPC perfect cost-only,perfect,1.0,0.0,0.0,0,1
+S6 MPC perfect cost+peak,perfect,1.0,0.0,0.5,0,1
+S6 MPC perfect balanced,perfect,1.0,1.7559301486366723,0.5,0,1
+S6 MPC perfect peak-heavy,perfect,1.0,1.7559301486366723,2.0,0,1
+S6 MPC persistence cost+peak,persistence,1.0,0.0,0.5,0,1
+S6 MPC persistence balanced,persistence,1.0,1.7559301486366723,0.5,0,1

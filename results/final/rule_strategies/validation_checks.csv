@@ -1,0 +1,51 @@
+check,passed,strategy
+hourly records cover window,True,S1
+numeric outputs finite,True,S1
+SOC nonnegative,True,S1
+SOC within pre-step capacity,True,S1
+AC exchange within power limit,True,S1
+hourly electrical balance,True,S1
+grid import/export identity,True,S1
+no simultaneous import/export,True,S1
+no intentional battery export,True,S1
+capacity nonincreasing,True,S1
+periodic SOC boundary closed (<=1e-3 kWh),True,S1
+hourly records cover window,True,S2
+numeric outputs finite,True,S2
+SOC nonnegative,True,S2
+SOC within pre-step capacity,True,S2
+AC exchange within power limit,True,S2
+hourly electrical balance,True,S2
+grid import/export identity,True,S2
+no simultaneous import/export,True,S2
+no intentional battery export,True,S2
+capacity nonincreasing,True,S2
+periodic SOC boundary closed (<=1e-3 kWh),True,S2
+hourly records cover window,True,S3
+numeric outputs finite,True,S3
+SOC nonnegative,True,S3
+SOC within pre-step capacity,True,S3
+AC exchange within power limit,True,S3
+hourly electrical balance,True,S3
+grid import/export identity,True,S3
+no simultaneous import/export,True,S3
+no intentional battery export,True,S3
+capacity nonincreasing,True,S3
+periodic SOC boundary closed (<=1e-3 kWh),True,S3
+grid charging only at low tariff,True,S3
+charging-hour import ceiling,True,S3
+discharge only at high tariff,True,S3
+hourly records cover window,True,S4
+numeric outputs finite,True,S4
+SOC nonnegative,True,S4
+SOC within pre-step capacity,True,S4
+AC exchange within power limit,True,S4
+hourly electrical balance,True,S4
+grid import/export identity,True,S4
+no simultaneous import/export,True,S4
+no intentional battery export,True,S4
+capacity nonincreasing,True,S4
+periodic SOC boundary closed (<=1e-3 kWh),True,S4
+grid charging only at low carbon,True,S4
+charging-hour import ceiling,True,S4
+discharge only at high carbon,True,S4
